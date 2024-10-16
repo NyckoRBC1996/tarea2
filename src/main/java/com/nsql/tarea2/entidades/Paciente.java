@@ -3,23 +3,30 @@ package com.nsql.tarea2.entidades;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document(collection = "pacientes")
 public class Paciente {
 
     @Id
-    private String id;
+    private Long id; // CI
+
     private String nombre;
-    private int edad;
+    private String apellido;
+    private Date fechaNacimiento;
+    private String sexo;
 
     // Constructor
     public Paciente() {}
 
     // Getters y Setters
-    public String getId() {
+    public Long getId() {
+
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
+
         this.id = id;
     }
 
@@ -31,11 +38,27 @@ public class Paciente {
         this.nombre = nombre;
     }
 
-    public int getEdad() {
-        return edad;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 }

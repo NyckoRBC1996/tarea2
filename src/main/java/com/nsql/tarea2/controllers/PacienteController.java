@@ -1,5 +1,6 @@
 package com.nsql.tarea2.controllers;
 
+import com.nsql.tarea2.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -10,24 +11,29 @@ import com.nsql.tarea2.repositories.PacienteRepository;
 @RequestMapping("/pacientes")
 public class PacienteController {
     @Autowired
-    private PacienteRepository pacienteRepository;
+    private PacienteService pacienteService;
 
     // Crear un nuevo paciente
-    @PostMapping
-    public Paciente crearPaciente(@RequestBody Paciente paciente) {
-        return pacienteRepository.save(paciente);
+    @PostMapping("add-paciente")
+    public void crearPaciente(@RequestBody Paciente paciente) {
+            pacienteService.agregarPaciente(paciente);
+    }
+    // Eliminar paciente
+    @DeleteMapping("eliminar-paciente")
+    public void eliminarPaciente(@RequestBody Paciente paciente) {
+        pacienteService.eliminarPaciente(paciente);
     }
 
     // Obtener todos los pacientes
-    @GetMapping
+    @GetMapping("obtener-pacientes")
     public List<Paciente> obtenerPacientes() {
-        return pacienteRepository.findAll();
+        return pacienteService.obtenerPacientes();
     }
 
     // Obtener un paciente por ID
-    @GetMapping("/{id}")
-    public Paciente obtenerPaciente(@PathVariable String id) {
-        return pacienteRepository.findById(id).orElse(null);
+    @GetMapping("buscar-paciente")
+    public Paciente obtenerPaciente(@RequestParam Long id) {
+        return pacienteService.buscarPacientePorId(id);
     }
 
 }
