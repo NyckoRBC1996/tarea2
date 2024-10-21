@@ -9,7 +9,7 @@ import java.util.Date;
 public class Paciente {
 
     @Id
-    private Long id; // CI
+    private String ci;
 
     private String nombre;
     private String apellido;
@@ -20,14 +20,12 @@ public class Paciente {
     public Paciente() {}
 
     // Getters y Setters
-    public Long getId() {
-
-        return id;
+    public String getCi() {
+        return ci;
     }
 
-    public void setId(Long id) {
-
-        this.id = id;
+    public void setId(String ci) {
+        this.ci = ci;
     }
 
     public String getNombre() {
