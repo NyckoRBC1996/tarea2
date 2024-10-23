@@ -21,7 +21,7 @@ public class PacienteService implements IPacienteService {
     private RegistroMedicoRepository registroMedicoRepository;
 
     @Override
-    public ResponseEntity<?> agregarPaciente( Paciente paciente) {
+    public ResponseEntity<?> agregarPaciente(Paciente paciente) {
         if (pacienteRepository.existsById(paciente.getCi())) {
             return ResponseEntity.status(401).body("El paciente ya existe");
         }

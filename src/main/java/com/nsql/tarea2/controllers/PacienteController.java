@@ -1,5 +1,6 @@
 package com.nsql.tarea2.controllers;
 
+import com.nsql.tarea2.dataTypes.DtHistorialMedico;
 import com.nsql.tarea2.entidades.RegistroMedico;
 import com.nsql.tarea2.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class PacienteController {
     private PacienteRepository pacienteRepository;
 
     // Crear un nuevo paciente
-    @PostMapping("add-paciente")
+    @PostMapping("agregar-paciente")
     public ResponseEntity<?> crearPaciente(@RequestBody Paciente paciente) {
            return pacienteService.agregarPaciente(paciente);
     }
@@ -41,8 +42,8 @@ public class PacienteController {
     }
 
     @PostMapping("agregar-registro")
-    public ResponseEntity<?> agregarRegistro(@RequestBody Paciente paciente) {
-        return pacienteService.agregarRegistro(paciente.getCi(), paciente.getHistorialMedico().getFirst());
+    public ResponseEntity<?> agregarRegistro(@RequestBody DtHistorialMedico historialMedico) {
+        return pacienteService.agregarRegistro(historialMedico.getCiPaciente(),historialMedico.getRegistro_Medico());
     }
 
     @GetMapping("consultar-historal")
