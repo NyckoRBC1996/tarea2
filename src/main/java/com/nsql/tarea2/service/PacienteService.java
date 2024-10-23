@@ -41,10 +41,8 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public ResponseEntity<?> buscarPacientePorCi(String ci){
-        if (!pacienteRepository.existsById(ci)) {
-            return ResponseEntity.status(402).body("No existe un paciente con la cédula aportada como parámetro");
-        }
-        return ResponseEntity.ok(pacienteRepository.findByCi(ci));
+        System.out.println(pacienteRepository.findById(ci));
+        return ResponseEntity.ok(pacienteRepository.findById(ci));
     }
 
     @Override
@@ -66,6 +64,25 @@ public class PacienteService implements IPacienteService {
         List<RegistroMedico> historial = registroMedicoRepository.findByCiPacienteOrderByFechaDesc(ci);
         return ResponseEntity.ok(historial);
     }
-
-
 }
+
+/*spring.application.name=tarea2
+# Configuración del puerto del servidor
+server.port=8080
+        # configuracion MongoDb
+spring.datasource.url=jdbc:mysql://localhost:27017/NoSql
+spring.datasource.username=root
+spring.datasource.password=1234
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.hibernate.ddl-auto=update
+
+# Habilitar la consola H2
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+# Mostrar consultas SQL en la consola
+spring.jpa.show-sql=true
+
+# Configuración de la ubicación de las entidades JPA
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.use_sql_comments=true*/

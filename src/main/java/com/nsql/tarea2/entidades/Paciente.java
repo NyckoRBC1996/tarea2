@@ -3,6 +3,7 @@ package com.nsql.tarea2.entidades;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -12,8 +13,8 @@ import java.util.List;
 public class Paciente {
 
     @Id
+    @Field("ci")
     private String ci;
-
     private String nombre;
     private String apellido;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
