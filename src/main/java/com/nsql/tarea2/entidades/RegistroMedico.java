@@ -1,5 +1,6 @@
 package com.nsql.tarea2.entidades;
 
+import com.nsql.tarea2.enums.TipoRegistroMedico;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,7 +14,7 @@ public class RegistroMedico {
     private String medico;
 
     private Date fecha;
-    private String tipo;
+    private TipoRegistroMedico tipo;
     private String diagnostico;
     private String institucion;
     private String descripcion;
@@ -81,11 +82,12 @@ public class RegistroMedico {
         this.medicacion = medicacion;
     }
 
-    public String getTipo() {
+    public TipoRegistroMedico getTipo() {
         return tipo;
     }
-    public void setTipo(String tipo) {
+    public void setTipo(TipoRegistroMedico tipo) {
         this.tipo = tipo;
     }
+
 
 }

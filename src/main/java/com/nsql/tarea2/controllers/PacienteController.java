@@ -36,17 +36,17 @@ public class PacienteController {
 
     // Obtener un paciente por ID
     @GetMapping("buscar-paciente")
-    public Paciente obtenerPaciente(@RequestParam Long id) {
-        return pacienteService.buscarPacientePorId(id);
+    public Paciente obtenerPaciente(@RequestBody String id) {
+        return pacienteService.buscarPacientePorCi(id);
     }
 
-    @PostMapping("/{ci}/registros")
-    public ResponseEntity<?> agregarRegistro(@PathVariable String ci, @RequestBody RegistroMedico registro) {
-        return pacienteService.agregarRegistro(ci, registro);
+    @PostMapping("agregar-registro")
+    public ResponseEntity<?> agregarRegistro(@RequestBody Paciente paciente) {
+        return pacienteService.agregarRegistro(paciente.getCi(), paciente.getHistorialMedico().getFirst());
     }
 
-    @GetMapping("/{ci}/historial")
-    public ResponseEntity<?> consultarHistorial(@PathVariable String ci) {
+    @GetMapping("consultar-historal")
+    public ResponseEntity<?> consultarHistorial(@RequestBody String ci) {
        return pacienteService.consultarHistorial(ci);
     }
     

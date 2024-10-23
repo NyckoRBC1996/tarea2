@@ -40,8 +40,8 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public Paciente buscarPacientePorId(Long id){
-        return pacienteRepository.findById(String.valueOf(id)).orElse(null);
+    public Paciente buscarPacientePorCi(String ci){
+        return pacienteRepository.findById(String.valueOf(ci)).orElse(null);
     }
 
     @Override
