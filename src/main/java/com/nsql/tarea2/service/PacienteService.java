@@ -40,8 +40,11 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public Paciente buscarPacientePorCi(String ci){
-        return pacienteRepository.findById(String.valueOf(ci)).orElse(null);
+    public ResponseEntity<?> buscarPacientePorCi(String ci){
+        if (!pacienteRepository.existsById(ci)) {
+            return ResponseEntity.status(402).body("No existe un paciente con la cédula aportada como parámetro");
+        }
+        return ResponseEntity.ok(pacienteRepository.findByCi(ci));
     }
 
     @Override

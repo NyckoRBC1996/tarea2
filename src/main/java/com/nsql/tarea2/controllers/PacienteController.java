@@ -37,13 +37,14 @@ public class PacienteController {
 
     // Obtener un paciente por ID
     @GetMapping("buscar-paciente")
-    public Paciente obtenerPaciente(@RequestBody String id) {
-        return pacienteService.buscarPacientePorCi(id);
+    public ResponseEntity<?> obtenerPaciente(@RequestBody String ci) {
+        System.out.println("La ci es: " + ci);
+        return pacienteService.buscarPacientePorCi(ci);
     }
 
     @PostMapping("agregar-registro")
     public ResponseEntity<?> agregarRegistro(@RequestBody DtHistorialMedico historialMedico) {
-        return pacienteService.agregarRegistro(historialMedico.getCiPaciente(),historialMedico.getRegistro_Medico());
+        return pacienteService.agregarRegistro(historialMedico.getPaciente().getCi(),historialMedico.getRegistroMedico());
     }
 
     @GetMapping("consultar-historal")

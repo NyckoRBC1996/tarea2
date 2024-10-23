@@ -6,21 +6,20 @@ import com.nsql.tarea2.entidades.RegistroMedico;
 
 public class DtHistorialMedico {
 
-    private String ciPaciente;
-    private RegistroMedico Registro_Medico;
+    private Paciente paciente;
+    private RegistroMedico registroMedico;
 
-    public String getCiPaciente() {
-        return ciPaciente;
+    public Paciente getPaciente() {
+        return paciente;
     }
-    public void setCiPaciente(String ciPaciente) {
-        this.ciPaciente = ciPaciente;
-    }
-
-    public RegistroMedico getRegistro_Medico() {
-        return Registro_Medico;
-    }
-    public void setRegistro_Medico(RegistroMedico registro_Medico) {
-        Registro_Medico = registro_Medico;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
+    public RegistroMedico getRegistroMedico() {
+        return registroMedico;
+    }
+    public void setRegistroMedico(RegistroMedico registroMedico) {
+        this.registroMedico = registroMedico;
+    }
 }

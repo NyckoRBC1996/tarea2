@@ -4,6 +4,7 @@ import com.nsql.tarea2.enums.TipoRegistroMedico;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Document(collection = "registros_medicos")
@@ -13,7 +14,7 @@ public class RegistroMedico {
     private String ciPaciente;
     private String medico;
 
-    private Date fecha;
+    private LocalDate fecha;
     private TipoRegistroMedico tipo;
     private String diagnostico;
     private String institucion;
@@ -47,10 +48,10 @@ public class RegistroMedico {
         this.medico = medico;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
