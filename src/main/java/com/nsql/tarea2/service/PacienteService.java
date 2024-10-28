@@ -4,10 +4,14 @@ import com.nsql.tarea2.entidades.RegistroMedico;
 import com.nsql.tarea2.repositories.PacienteRepository;
 import com.nsql.tarea2.repositories.RegistroMedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 import com.nsql.tarea2.entidades.Paciente;
@@ -41,7 +45,9 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public ResponseEntity<?> buscarPacientePorCi(String ci){
-        System.out.println(pacienteRepository.findById(ci));
+        if (!pacienteRepository.existsById(ci)) {
+            return ResponseEntity.status(401).body("El paciente no existe");
+        }
         return ResponseEntity.ok(pacienteRepository.findById(ci));
     }
 
@@ -60,8 +66,8 @@ public class PacienteService implements IPacienteService {
         if (!pacienteRepository.existsById(ci)) {
             return ResponseEntity.status(402).body("No existe un paciente con la cédula aportada como parámetro");
         }
-
-        List<RegistroMedico> historial = registroMedicoRepository.findByCiPacienteOrderByFechaDesc(ci);
+        Pageable pageable = PageRequest.of(0, 1);
+        Page<RegistroMedico> historial = registroMedicoRepository.findByCiPacienteOrderByFechaDesc(ci, pageable);
         return ResponseEntity.ok(historial);
     }
 }
