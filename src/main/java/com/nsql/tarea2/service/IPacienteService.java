@@ -2,6 +2,7 @@ package com.nsql.tarea2.service;
 
 import com.nsql.tarea2.entidades.Paciente;
 import com.nsql.tarea2.entidades.RegistroMedico;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -14,5 +15,5 @@ public interface IPacienteService {
     public ResponseEntity<?> buscarPacientePorCi(String ci);
 
     public ResponseEntity<?> agregarRegistro(String ci, RegistroMedico registro);
-    public ResponseEntity<?> consultarHistorial(String ci);
+    public ResponseEntity<?> consultarHistorial(String ci, Pageable pageable);
 }

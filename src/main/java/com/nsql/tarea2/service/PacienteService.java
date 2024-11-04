@@ -62,11 +62,11 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public ResponseEntity<?> consultarHistorial(String ci) {
+    public ResponseEntity<?> consultarHistorial(String ci, Pageable pageable) {
         if (!pacienteRepository.existsById(ci)) {
             return ResponseEntity.status(402).body("No existe un paciente con la cédula aportada como parámetro");
         }
-        Pageable pageable = PageRequest.of(0, 1);
+
         Page<RegistroMedico> historial = registroMedicoRepository.findByCiPacienteOrderByFechaDesc(ci, pageable);
         return ResponseEntity.ok(historial);
     }

@@ -8,6 +8,8 @@ import com.nsql.tarea2.repositories.RegistroMedicoRepository;
 import com.nsql.tarea2.service.PacienteService;
 import com.nsql.tarea2.service.RegistroMedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -60,7 +62,15 @@ public class PacienteController {
     @GetMapping("consultar-historal")
     public ResponseEntity<?> consultarHistorial(@RequestBody JsonNode jsonNode){
        String ci = jsonNode.get("ci").asText(); // Extraer 'ci' del JSON
-       return pacienteService.consultarHistorial(ci);
+        // Extraer 'pageNumber' y 'size' del JSON
+        int pageNumber = jsonNode.has("pageNumber") ? jsonNode.get("pageNumber").asInt() : 0; // Valor por defecto a 0
+        int pageSize = jsonNode.has("pageSize") ? jsonNode.get("pageSize").asInt() : 10; // Valor por defecto a 10
+
+        // Crear Pageable usando los valores extraídos
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        // Llamar al servicio pasando el 'ci' y el 'pageable'
+        return pacienteService.consultarHistorial(ci, pageable);
     }
 
     @GetMapping("obtener-registros-por-criterio")
