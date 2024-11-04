@@ -13,13 +13,18 @@ public interface RegistroMedicoRepository extends MongoRepository<RegistroMedico
     List<RegistroMedico> findByCiPacienteOrderByFechaDesc(String ciPaciente);
     Page<RegistroMedico> findByCiPacienteOrderByFechaDesc(String ci, Pageable pageable);
 
-    @Query("{"
-            + "'tipo': ?0, "
-            + "'diagnostico': ?1, "
-            + "'medico': ?2, "
-            + "'institucion': ?3"
-            + "}")
-    List<RegistroMedico> findByCriterios(TipoRegistroMedico tipo, String diagnostico, String medico, String institucion);
+    @Query("{ " +
+            "'tipo': ?0, " +
+            "'diagnostico': { $regex: ?1, $options: 'i' }, " +
+            "'medico': { $regex: ?2, $options: 'i' }, " +
+            "'institucion': { $regex: ?3, $options: 'i' } " +
+            "}")
+    List<RegistroMedico> findByCriterios(
+            TipoRegistroMedico tipo,
+            String diagnostico,
+            String medico,
+            String institucion
+    );
 
     //List<RegistroMedico> findByTipoAndDiagnosticoAndMedicoAndInstitucion(String tipo, String diagnostico, String medico, String institucion);
 }

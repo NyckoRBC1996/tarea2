@@ -6,6 +6,7 @@ import com.nsql.tarea2.entidades.RegistroMedico;
 import com.nsql.tarea2.enums.TipoRegistroMedico;
 import com.nsql.tarea2.repositories.RegistroMedicoRepository;
 import com.nsql.tarea2.service.PacienteService;
+import com.nsql.tarea2.service.RegistroMedicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,8 @@ public class PacienteController {
     private PacienteRepository pacienteRepository;
     @Autowired
     private RegistroMedicoRepository registroMedicoRepository;
+    @Autowired
+    private RegistroMedicoService registroMedicoService;
 
     // Crear un nuevo paciente
     @PostMapping("agregar-paciente")
@@ -62,14 +65,23 @@ public class PacienteController {
 
     @GetMapping("obtener-registros-por-criterio")
     public ResponseEntity<?> obtenerRegistrosPorCriterio(@RequestBody JsonNode jsonNode){
-        /*TipoRegistroMedico tipo = jsonNode.has("tipo") ? Tipo.valueOf(jsonNode.get("tipo").asText()) : null;
+        TipoRegistroMedico tipoValido;
+
+        if (jsonNode.has("tipo") && !jsonNode.get("tipo").isNull()) {
+            try {
+                // Intenta convertir el texto recibido a un valor del enum TipoRegistroMedico
+                tipoValido = TipoRegistroMedico.valueOf(jsonNode.get("tipo").asText().toUpperCase());
+                System.out.println(tipoValido);
+            } catch (IllegalArgumentException e) {
+                // Si el valor no coincide con ningún valor en el enum, devuelve un error
+                return ResponseEntity.badRequest().body("Tipo de registro médico inválido. Valores permitidos: CONSULTA, EXAMEN, INTERNACION.");
+            }
+        }
         String diagnostico = jsonNode.has("diagnostico") ? jsonNode.get("diagnostico").asText() : null;
         String medico = jsonNode.has("medico") ? jsonNode.get("medico").asText() : null;
         String institucion = jsonNode.has("institucion") ? jsonNode.get("institucion").asText() : null;
-
-        List<RegistroMedico> registros = registroMedicoRepository.findByCriterios(tipo, diagnostico, medico, institucion);
-        return ResponseEntity.ok(registros);*/
-        return ResponseEntity.ok("Ta Bien Goku");
+        TipoRegistroMedico tipo = TipoRegistroMedico.valueOf(jsonNode.get("tipo").asText().toUpperCase());
+        return registroMedicoService.obtenerRegistrosFiltrados(tipo, diagnostico, medico, institucion);
     }
     
 }
