@@ -1,17 +1,14 @@
-package com.nsql.tarea2.service;
+package com.nsql.tarea2.services;
 
-import com.nsql.tarea2.entidades.Paciente;
 import com.nsql.tarea2.entidades.RegistroMedico;
 import com.nsql.tarea2.enums.TipoRegistroMedico;
 import com.nsql.tarea2.repositories.PacienteRepository;
 import com.nsql.tarea2.repositories.RegistroMedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Service
 public class RegistroMedicoService implements IRegistroMedicoService {
@@ -20,16 +17,6 @@ public class RegistroMedicoService implements IRegistroMedicoService {
     private PacienteRepository pacienteRepository;
     @Autowired
     private RegistroMedicoRepository registroMedicoRepository;
-
-    @Override
-    public ResponseEntity<?> agregarRegistro(String ci, RegistroMedico registro) {
-        if (!pacienteRepository.existsById(ci)) {
-            return ResponseEntity.status(402).body("No existe un paciente con la cédula aportada como parámetro");
-        }
-        registro.setCiPaciente(ci);
-        registroMedicoRepository.save(registro);
-        return ResponseEntity.ok("Registro médico agregado exitosamente");
-    }
 
     @Override
     public ResponseEntity<?> eliminarRegistro(RegistroMedico registro) {
@@ -50,6 +37,24 @@ public class RegistroMedicoService implements IRegistroMedicoService {
                 medico != null ? medico : "",
                 institucion != null ? institucion : ""
         ));
+    }
+
+    @Override
+    public RegistroMedico agregarRegistro(String ci, RegistroMedico registro) {
+        if (!pacienteRepository.existsById(ci)) {
+            return null;
+        }
+        registro.setCiPaciente(ci);
+        registroMedicoRepository.save(registro);
+        return registro;
+    }
+
+    @Override
+    public Page<RegistroMedico> consultarHistorial(String ci, Pageable pageable) {
+        if (!pacienteRepository.existsById(ci)) {
+            return null;
+        }
+        return registroMedicoRepository.findByCiPacienteOrderByFechaDesc(ci, pageable);
     }
 
 }

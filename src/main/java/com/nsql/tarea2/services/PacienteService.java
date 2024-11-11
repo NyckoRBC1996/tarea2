@@ -1,17 +1,15 @@
-package com.nsql.tarea2.service;
+package com.nsql.tarea2.services;
 
 import com.nsql.tarea2.entidades.RegistroMedico;
 import com.nsql.tarea2.repositories.PacienteRepository;
 import com.nsql.tarea2.repositories.RegistroMedicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 import com.nsql.tarea2.entidades.Paciente;
@@ -25,12 +23,12 @@ public class PacienteService implements IPacienteService {
     private RegistroMedicoRepository registroMedicoRepository;
 
     @Override
-    public ResponseEntity<?> agregarPaciente(Paciente paciente) {
+    public Paciente agregarPaciente(Paciente paciente) {
         if (pacienteRepository.existsById(paciente.getCi())) {
-            return ResponseEntity.status(401).body("El paciente ya existe");
+            return null;
         }
         pacienteRepository.save(paciente);
-        return ResponseEntity.ok("Paciente agregado exitosamente");
+        return paciente;
     }
 
     @Override
@@ -51,25 +49,6 @@ public class PacienteService implements IPacienteService {
         return ResponseEntity.ok(pacienteRepository.findById(ci));
     }
 
-    @Override
-    public ResponseEntity<?> agregarRegistro(String ci, RegistroMedico registro) {
-        if (!pacienteRepository.existsById(ci)) {
-            return ResponseEntity.status(402).body("No existe un paciente con la cédula aportada como parámetro");
-        }
-        registro.setCiPaciente(ci);
-        registroMedicoRepository.save(registro);
-        return ResponseEntity.ok("Registro médico agregado exitosamente");
-    }
-
-    @Override
-    public ResponseEntity<?> consultarHistorial(String ci, Pageable pageable) {
-        if (!pacienteRepository.existsById(ci)) {
-            return ResponseEntity.status(402).body("No existe un paciente con la cédula aportada como parámetro");
-        }
-
-        Page<RegistroMedico> historial = registroMedicoRepository.findByCiPacienteOrderByFechaDesc(ci, pageable);
-        return ResponseEntity.ok(historial);
-    }
 }
 
 /*spring.application.name=tarea2
