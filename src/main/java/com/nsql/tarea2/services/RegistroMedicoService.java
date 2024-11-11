@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RegistroMedicoService implements IRegistroMedicoService {
 
@@ -29,14 +31,14 @@ public class RegistroMedicoService implements IRegistroMedicoService {
     }
 
     @Override
-    public ResponseEntity<?> obtenerRegistrosFiltrados(TipoRegistroMedico tipo, String diagnostico, String medico, String institucion) {
+    public List<RegistroMedico> obtenerRegistrosFiltrados(TipoRegistroMedico tipo, String diagnostico, String medico, String institucion) {
         // Llama al repositorio usando los parámetros según su valor
-        return ResponseEntity.ok(registroMedicoRepository.findByCriterios(
+        return registroMedicoRepository.findByCriterios(
                 tipo != null ? tipo : null,
                 diagnostico != null ? diagnostico : "",
                 medico != null ? medico : "",
                 institucion != null ? institucion : ""
-        ));
+        );
     }
 
     @Override
@@ -49,12 +51,6 @@ public class RegistroMedicoService implements IRegistroMedicoService {
         return registro;
     }
 
-    @Override
-    public Page<RegistroMedico> consultarHistorial(String ci, Pageable pageable) {
-        if (!pacienteRepository.existsById(ci)) {
-            return null;
-        }
-        return registroMedicoRepository.findByCiPacienteOrderByFechaDesc(ci, pageable);
-    }
+
 
 }
