@@ -4,3 +4,6 @@
 // Si tenemos q pasar paginacion por parametro y si esta bien
 // Se pueden poner mas de un tipo como criterio
 // Si precisamos validaciones como por ejemplo el tipo
+
+//cada vez que se hace un commit hay que hacer restart al jenkins 
+//sudo systemctl restart jenkins
