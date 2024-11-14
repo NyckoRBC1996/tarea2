@@ -65,13 +65,17 @@
 				<version>0.8.12</version>
 				<executions>
 					<execution>
+						<id>prepare-agent</id>
 						<goals>
 							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>verify</phase> <!-- Ejecuta el reporte en la fase de verificación -->
+						<goals>
 							<goal>report</goal>
 						</goals>
-						<configuration>
-							<destFile>${project.build.directory}/jacoco.exec</destFile>
-						</configuration>
 					</execution>
 				</executions>
 			</plugin>
