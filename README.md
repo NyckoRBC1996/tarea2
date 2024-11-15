@@ -78,6 +78,11 @@ Instalación y Configuración
         Maven 3.9.9.
         Base de datos NoSQL: MongoDB.
         Postman para pruebas.
+
+    Requisitos Opcionales
+        Docker
+        JMeter
+        Jenkins
         
     Pasos para ejecutar
     
@@ -128,10 +133,40 @@ Instalación y Configuración
                   "tipo": "string"
                 }
                 
-                Pruebas con Postman:
+    Pruebas con Postman:
                 
-                    Coleccion: https://www.postman.com/security-astronaut-21830912/workspace/tarea2/collection/35029060-d2f441a4-08bb-434f-88d6-555fd381522d?action=share&creator=35029060
+        Coleccion: https://www.postman.com/security-astronaut-21830912/workspace/tarea2/collection/35029060-d2f441a4-08bb-434f-88d6-555fd381522d?action=share&creator=35029060
+                    
+        Imagenes Postman: /postman/HistorialMedico.p
+                    
+    Requerimientos Opcionales
+            
+                Dockerización:
 
-                    
-                    
-                    Los casos de prueba se encuentran documentados y organizados en un archivo de colección de Postman:Ruta: /postman/HistorialMedico.postman_collection.json.Importa la colección en Postman y utiliza el entorno preconfigurado para realizar pruebas de los endpoints.Requerimientos OpcionalesDockerización:Contenedor para la aplicación Spring Boot.Contenedor para MongoDB.Pruebas de carga:Realizadas con JMeter. Resultados disponibles en /reports/jmeter.CréditosAutores: [Tu nombre y el de tu equipo].Contacto: [Correo electrónico].cada vez que se hace un commit hay que hacer restart al jenkinssudo systemctl restart jenkins./jmeter.sh//Para crear el JARmvn clean package//Buildear el dockersudo docker build -t tarea2 .//Levantarsudo docker run -p 8080:8080 tarea2//Frenarsudo docker stop focused_leakey
+                    1. Dockerizar la solución: Se creó un archivo Dockerfile que especifica el entorno necesario para ejecutar la aplicación.
+                    2. Construir Imagen Docker: Utilizamos el comando docker build para generar la imagen del contenedor a partir del Dockerfile
+                        sudo docker build -t tarea2 .
+                    3. Ejecutar el Contenedor: Luego de construir la imagen, se ejecuta con el siguiente comando
+                        sudo docker run -p 8080:8080 tarea2
+                    4. Guardamos la Imagen del docker en la carpeta del proyecto
+                        sudo docker save -o tarea2.tar tarea2
+
+                Pruebas de carga Realizadas con JMeter:
+                
+                    1.Crear un archivo de prueba en JMeter que simula peticiones GET, POST, etc, a los servicios REST implementados.
+                    2.Configurar el número de usuarios concurrentes y las peticiones por segundo.
+                    3.Añadir HTTP Request para cada uno de los endpoints.
+                    4.Configurar Listeners como View Results in Table para analizar las respuestas.
+                    5.Agregar el encabezado Content-Type y Accept para JSON para asegurarte de que las solicitudes sean interpretadas correctamente como JSON.
+                    6.Ejecutar las pruebas y ver Resultados.
+
+                Automatizacion de Pruebas con Jenkins:
+                    1.Crear un Jenkins Pipeline.
+                    2.Configurar el repositorio de código (GitHub) en la Pipeline.
+                    3.Definir el codigo del Pipeline: se agregan todos los "stages" por los que pasa la Pipeline, donde se configuro un "stage" para JUnit y Jacoco.
+                    4.Buildear el Pipeline.
+                    5.Ver los resultados y los test.
+
+
+                
+
