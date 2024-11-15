@@ -142,12 +142,19 @@ Contacto: [Correo electrónico].
 
 
 
-// Agregar Registro si hay que pasar parametros o request body
-// Ci en el mongo que hace _id
-// Si puede Registros medicos iguales o no importa
-// Si tenemos q pasar paginacion por parametro y si esta bien
-// Se pueden poner mas de un tipo como criterio
-// Si precisamos validaciones como por ejemplo el tipo
+cada vez que se hace un commit hay que hacer restart al jenkins 
+sudo systemctl restart jenkins
 
-//cada vez que se hace un commit hay que hacer restart al jenkins 
-//sudo systemctl restart jenkins
+./jmeter.sh
+
+//Para crear el JAR
+mvn clean package
+
+//Buildear el docker
+sudo docker build -t tarea2 .
+
+//Levantar
+sudo docker run -p 8080:8080 tarea2
+
+//Frenar
+sudo docker stop focused_leakey
