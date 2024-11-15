@@ -98,75 +98,82 @@ Instalación y Configuración
         Ejecuta la aplicación desde Ide:
             boton play en el Ide
         
-    Modelo de Base de Datos
+Modelo de Base de Datos
         
-        Se eligió MongoDB debido a la experiencia previa adquirida en proyectos anteriores, lo que facilitó la implementación.
-        Su curva de aprendizaje es más sencilla en comparación con otras bases de datos NoSQL, permitiendo un desarrollo más rápido y eficiente. 
-        Además, MongoDB cumple con los requisitos del proyecto, como la capacidad de manejar datos no estructurados y la posibilidad de realizar                             consultas flexibles.
+    Se eligió MongoDB debido a la experiencia previa adquirida en proyectos anteriores, lo que facilitó la implementación.
+    Su curva de aprendizaje es más sencilla en comparación con otras bases de datos NoSQL, permitiendo un desarrollo más rápido y eficiente. 
+    Además, MongoDB cumple con los requisitos del proyecto, como la capacidad de manejar datos no estructurados y la posibilidad de realizar                             consultas flexibles.
 
-        Otro factor clave fue que MongoDB es una base de datos gratuita, lo que reduce costos sin sacrificar rendimiento. Su escalabilidad y 
-        adecuación al modelo de datos, con documentos JSON, la hacen ideal para este tipo de aplicaciones.
+    Otro factor clave fue que MongoDB es una base de datos gratuita, lo que reduce costos sin sacrificar rendimiento. Su escalabilidad y 
+    adecuación al modelo de datos, con documentos JSON, la hacen ideal para este tipo de aplicaciones.
         
-        Esquema de Colecciones
-        
-            Pacientes
-                {
-                  "_id": "string", //CI
-                  "nombre": "string",
-                  "apellido": "string",
-                  "fechaNacimiento": "date",
-                  "sexo": "string",
-                  "_class": "string"
-                }
+    Esquema de Colecciones
+    
+        Pacientes
+            {
+              "_id": "string", //CI
+              "nombre": "string",
+              "apellido": "string",
+              "fechaNacimiento": "date",
+              "sexo": "string",
+              "_class": "string"
+            }
+            
+        Registros Médicos
+            {
+              "_id": "ObjectId",
+              "_class": "string",
+              "ciPaciente": "string",
+              "descripcion": "string",
+              "diagnostico": "string",
+              "fecha": "date",
+              "institucion": "string",
+              "medicacion": "string",
+              "medico": "string",
+              "tipo": "string"
+            }
                 
-            Registros Médicos
-                {
-                  "_id": "ObjectId",
-                  "_class": "string",
-                  "ciPaciente": "string",
-                  "descripcion": "string",
-                  "diagnostico": "string",
-                  "fecha": "date",
-                  "institucion": "string",
-                  "medicacion": "string",
-                  "medico": "string",
-                  "tipo": "string"
-                }
+Pruebas con Postman:
                 
-    Pruebas con Postman:
-                
-        Coleccion: https://www.postman.com/security-astronaut-21830912/workspace/tarea2/collection/35029060-d2f441a4-08bb-434f-88d6-555fd381522d?action=share&creator=35029060
+    Coleccion: https://www.postman.com/security-astronaut-21830912/workspace/tarea2/collection/35029060-d2f441a4-08bb-434f-88d6-555fd381522d?action=share&creator=35029060
                     
         Imagenes Postman: /postman/HistorialMedico.p
                     
-    Requerimientos Opcionales
+Requerimientos Opcionales
             
-                Dockerización:
+    Dockerización:
 
-                    1. Dockerizar la solución: Se creó un archivo Dockerfile que especifica el entorno necesario para ejecutar la aplicación.
-                    2. Construir Imagen Docker: Utilizamos el comando docker build para generar la imagen del contenedor a partir del Dockerfile
-                        sudo docker build -t tarea2 .
-                    3. Ejecutar el Contenedor: Luego de construir la imagen, se ejecuta con el siguiente comando
-                        sudo docker run -p 8080:8080 tarea2
-                    4. Guardamos la Imagen del docker en la carpeta del proyecto
-                        sudo docker save -o tarea2.tar tarea2
+        1. Dockerizar la solución: Se creó un archivo Dockerfile que especifica el entorno necesario para ejecutar la aplicación.
+        2. Construir Imagen Docker: Utilizamos el comando docker build para generar la imagen del contenedor a partir del Dockerfile
+            sudo docker build -t tarea2 .
+        3. Ejecutar el Contenedor: Luego de construir la imagen, se ejecuta con el siguiente comando
+            sudo docker run -p 8080:8080 tarea2
+        4. Guardamos la Imagen del docker en la carpeta del proyecto
+            sudo docker save -o tarea2.tar tarea2
 
-                Pruebas de carga Realizadas con JMeter:
-                
-                    1.Crear un archivo de prueba en JMeter que simula peticiones GET, POST, etc, a los servicios REST implementados.
-                    2.Configurar el número de usuarios concurrentes y las peticiones por segundo.
-                    3.Añadir HTTP Request para cada uno de los endpoints.
-                    4.Configurar Listeners como View Results in Table para analizar las respuestas.
-                    5.Agregar el encabezado Content-Type y Accept para JSON para asegurarte de que las solicitudes sean interpretadas correctamente como JSON.
-                    6.Ejecutar las pruebas y ver Resultados.
+    Pruebas de carga Realizadas con JMeter:
+        
+        1.Crear un archivo de prueba en JMeter que simula peticiones GET, POST, etc, a los servicios REST implementados.
+        2.Configurar el número de usuarios concurrentes y las peticiones por segundo.
+        3.Añadir HTTP Request para cada uno de los endpoints.
+        4.Configurar Listeners como View Results in Table para analizar las respuestas.
+        5.Agregar el encabezado Content-Type y Accept para JSON para asegurarte de que las solicitudes sean interpretadas correctamente como JSON.
+        6.Ejecutar las pruebas y ver Resultados.
 
-                Automatizacion de Pruebas con Jenkins:
-                    1.Crear un Jenkins Pipeline.
-                    2.Configurar el repositorio de código (GitHub) en la Pipeline.
-                    3.Definir el codigo del Pipeline: se agregan todos los "stages" por los que pasa la Pipeline, donde se configuro un "stage" para JUnit y Jacoco.
-                    4.Buildear el Pipeline.
-                    5.Ver los resultados y los test.
+    Automatizacion de Pruebas con Jenkins:
+        1.Crear un Jenkins Pipeline.
+        2.Configurar el repositorio de código (GitHub) en la Pipeline: Vincular el repositorio de GitHub donde se encuentra el código fuente del
+        proyecto para que Jenkins pueda acceder y obtener la última versión del código.
+        3.Definir el codigo del Pipeline: Se incluyen stages como "Build", "Test" y "Coverage", donde se configuran herramientas como JUnit para pruebas
+        unitarias y JaCoCo para medir la cobertura del código.
+        4.Instalar los plugins Necesarios para el funcionamiento de Jenkins.
+        5.Buildear el Pipeline.
+        6.Ver los resultados y los test.
 
-
-                
-
+    Resultados de Pruebas:      
+            
+            Pruebas de Postman:     
+                Los resultados de las pruebas realizadas con Postman se encuentran en la carpeta Postman dentro del repositorio de GitHub.      
+            
+            Pruebas con JMeter:     
+                Los resultados de las pruebas de carga realizadas con JMeter están disponibles en la carpeta JMeter dentro del repositorio de GitHub.
