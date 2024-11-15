@@ -145,11 +145,11 @@ Requerimientos Opcionales
 
         1. Dockerizar la solución: Se creó un archivo Dockerfile que especifica el entorno necesario para ejecutar la aplicación.
         2. Construir Imagen Docker: Utilizamos el comando docker build para generar la imagen del contenedor a partir del Dockerfile
-            sudo docker build -t tarea2 .
+                sudo docker build -t tarea2 .
         3. Ejecutar el Contenedor: Luego de construir la imagen, se ejecuta con el siguiente comando
-            sudo docker run -p 8080:8080 tarea2
+                sudo docker run -p 8080:8080 tarea2
         4. Guardamos la Imagen del docker en la carpeta del proyecto
-            sudo docker save -o tarea2.tar tarea2
+                sudo docker save -o tarea2.tar tarea2
 
     Pruebas de carga Realizadas con JMeter:
         
