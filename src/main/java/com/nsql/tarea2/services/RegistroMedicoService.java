@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Criteria;
 
 import java.util.List;
 
@@ -19,6 +22,9 @@ public class RegistroMedicoService implements IRegistroMedicoService {
     private PacienteRepository pacienteRepository;
     @Autowired
     private RegistroMedicoRepository registroMedicoRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Override
     public ResponseEntity<?> eliminarRegistro(RegistroMedico registro) {
@@ -32,13 +38,27 @@ public class RegistroMedicoService implements IRegistroMedicoService {
 
     @Override
     public List<RegistroMedico> obtenerRegistrosFiltrados(TipoRegistroMedico tipo, String diagnostico, String medico, String institucion) {
-        // Llama al repositorio usando los parámetros según su valor
-        return registroMedicoRepository.findByCriterios(
-                tipo != null ? tipo : null,
-                diagnostico != null ? diagnostico : "",
-                medico != null ? medico : "",
-                institucion != null ? institucion : ""
-        );
+        Criteria criteria = new Criteria();
+
+        if (tipo != null) {
+            criteria.and("tipo").is(tipo);  // Solo se filtra por 'tipo' si no es null
+        }
+
+        if (diagnostico != null && !diagnostico.isEmpty()) {
+            criteria.and("diagnostico").regex(diagnostico, "i");  // Se filtra por 'diagnostico' si no es null o vacío
+        }
+
+        if (medico != null && !medico.isEmpty()) {
+            criteria.and("medico").regex(medico, "i");  // Se filtra por 'medico' si no es null o vacío
+        }
+
+        if (institucion != null && !institucion.isEmpty()) {
+            criteria.and("institucion").regex(institucion, "i");  // Se filtra por 'institucion' si no es null o vacío
+        }
+
+        // Usar MongoTemplate para ejecutar la consulta
+        Query query = new Query(criteria);
+        return mongoTemplate.find(query, RegistroMedico.class);
     }
 
     @Override
