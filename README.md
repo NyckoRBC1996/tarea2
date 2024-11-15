@@ -18,7 +18,7 @@ Ofrece servicios REST para la administración y consulta de datos almacenados en
  "fechaNacimiento": "1990-01-01",
  "sexo": "Hombre",
  "historialMedico": null
-}
+}```
 **Respuestas**:
     201 Created: Paciente agregado con éxito.
     401 Conflict: "El paciente ya existe".
