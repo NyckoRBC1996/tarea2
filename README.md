@@ -1,4 +1,4 @@
-Sistema de Gestión de Historial Médico
+Sistema de Gestión de Historial Médico (En la pestaña Code se ve Bien)
 
 Ofrece servicios REST para la administración y consulta de datos almacenados en MongoDB, con soporte para operaciones clave como agregar pacientes, registrar datos médicos y realizar consultas avanzadas.w
 
